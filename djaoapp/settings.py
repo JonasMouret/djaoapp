@@ -3,6 +3,7 @@
 
 # Django settings for Djaoapp project.
 import os.path, sys
+import os
 
 from django import VERSION as DJANGO_VERSION
 from django.contrib.messages import constants as messages
@@ -15,6 +16,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Default values that can be overriden by `update_settings` later on.
 APP_NAME = os.path.basename(BASE_DIR)
+
+# (CSRF) Make this unique, and don't share it with anybody.
+SECRET_KEY = "%(SECRET_KEY)s"
+
+# Authentication with payment provider
+STRIPE_CLIENT_ID = os.environ.get("STRIPE_CLIENT_ID") or ImproperlyConfigured("STRIPE_CLIENT_ID not set")
+STRIPE_PUB_KEY = os.environ.get("STRIPE_PUB_KEY") or ImproperlyConfigured("STRIPE_PUB_KEY not set")
+STRIPE_PRIV_KEY = os.environ.get("STRIPE_PRIV_KEY") or ImproperlyConfigured("STRIPE_PRIV_KEY not set")
+
+# Authentication with payment provider (test keys)
+STRIPE_TEST_CLIENT_ID = os.environ.get("STRIPE_TEST_CLIENT_ID") or ImproperlyConfigured("STRIPE_TEST_CLIENT_ID not set")
+STRIPE_TEST_PUB_KEY = os.environ.get("STRIPE_TEST_PUB_KEY") or ImproperlyConfigured("STRIPE_TEST_PUB_KEY not set")
+STRIPE_TEST_PRIV_KEY = os.environ.get("STRIPE_TEST_PRIV_KEY") or ImproperlyConfigured("STRIPE_TEST_PRIV_KEY not set")
+STRIPE_TEST_CONNECTED_KEY = os.environ.get("STRIPE_TEST_CONNECTED_KEY") or ImproperlyConfigured("STRIPE_TEST_CONNECTED_KEY not set")
+
 
 DEBUG = True
 
