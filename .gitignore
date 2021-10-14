@@ -7,7 +7,7 @@
 .timestamp
 .vscode
 assets
-htdocs
+#htdocs
 htdocs/media/
 themes/
 djaoapp/locale/*/LC_MESSAGES/*.mo
