@@ -1,0 +1,174 @@
+{% extends "saas/base_dashboard.html" %}
+
+{% block saas_title %}
+  {% trans organization_name=organization.printable_name %}{{organization_name}} Dashboard{% endtrans %}
+{% endblock %}
+
+{% block saas_descr %}
+  {% trans %}A section short description{% endtrans %}
+{% endblock %}
+
+{% block saas_content %}
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-8">
+          <!-- User Search Input -->
+          <search-profile inline-template id="search-list-container">
+            <div class="card">
+              <div class="card-body border-bottom">
+                <h5 class="card-title mb-0">{% trans %}Find a profile{% endtrans %}</h5>
+              </div>
+              <div class="card-body pb-0">
+                <div class="row">
+                  <div class="col">
+                    <input class="form-control" type="text" placeholder="{% trans %}Search...{% endtrans %}" v-model="params.q" @input="filterList" />
+                  </div>
+                </div>
+                <table class="table table-striped">
+                  <tbody id="search-results" v-show="itemsLoaded && items.results.length > 0" v-cloak>
+                    <tr v-for="entry in items.results">
+                      <td>
+                      <a :href="(entry.type == 'user' ? '{{urls.profile_redirect}}' : '{{urls.accounts_base}}') + entry.slug + '/'">[[entry.slug]]</a>
+                      </td>
+                      <td>[[entry.full_name]]</td>
+                      <td>[[entry.email]]</td>
+                      <td>
+                        [[humanizeTimeDelta(entry.created_at, params.ends_at)]]
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </search-profile>
+
+          <!-- Recent Users Chart -->
+          {% if urls and urls.recent_activity %}
+          <recent-activity inline-template id="recent-activity-container">
+            <div class="card my-4">
+              <div class="card-body">
+                <h5 class="card-title mb-0">Recently Active Users</h5>
+              </div>
+              <div class="card-body" v-show="!itemsLoaded">
+                <p>
+                  <h3 class="text-center"><i class="fa fa-refresh fa-spin"></i></h3>
+                </p>
+              </div>
+              <div class="card-body" v-if="itemsLoaded && items.results.length === 0" v-cloak>
+                <p class="card-text text-muted">
+                  {% trans %}No recently active users{% endtrans %}
+                </p>
+              </div>
+              <div class="list-group list-group-flush" v-show="itemsLoaded && items.results.length > 0" v-cloak>
+                <a class="list-group-item d-flex justify-content-between align-items-center" v-for="item in items.results"
+                   :href="(item.type == 'user' ? '{{urls.profile_redirect}}' : '{{urls.accounts_base}}') + item.slug + '/'">
+                  <span>
+                    <span v-if="item.printable_name !== ''" class="d-inline-block item-name">[[item.printable_name]]</span>
+                    <span v-else>No Username</span>
+                    <span class="badge ml-2" :class="{
+                        'badge-success': item.descr === 'charge paid',
+                        'badge-danger': item.descr === 'charge failed',
+                        'badge-secondary': item.descr === 'recently logged in'
+                      }">[[item.descr]]</span>
+                  </span>
+                  <small class="text-muted ml-2">Last active [[humanizeTimeDelta(item.created_at, params.ends_at)]]</small>
+                </a>
+              </div>
+            </div>
+          </recent-activity>
+          {% endif %}
+
+          <!-- Todos -->
+          <todo-list inline-template id="todos-container" class="mt-4">
+            <div class="card" v-show="itemsLoaded && items.results.length > 0" v-cloak>
+              <div class="card-body border-bottom">
+                <h5 class="card-title mb-0">Todo items</h5>
+              </div>
+              <div class="card-body">
+                <div class="list-group list-group-flush" v-show="itemsLoaded && items.results.length > 0" v-cloak>
+                </div>
+              </div>
+            </div>
+          </todo-list>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <monthly-revenue inline-template id="monthly-revenue-container" class="px-0 d-flex flex-wrap">
+            <div>
+              <!-- MRR Charts -->
+              <div class="card w-100 mb-4" v-if="!item.processor_hint">
+                <div class="card-body">
+                  <div class="justify-content-center">
+                    <h5 class="card-title text-center">{% trans %}MRR{% endtrans %}</h5>
+                  </div>
+                  <div class="align-items-center justify-content-center h-75">
+                    <h2 class="text-center" v-show="!itemLoaded"><i class="fa fa-refresh fa-spin"></i></h2>
+                    <h2 class="text-center" v-show="itemLoaded && !item.processor_hint" v-cloak>[[amount / 100 | currency('$', 0)]]</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="card w-100 mb-4"
+                   v-if="itemLoaded && item.processor_hint" v-cloak>
+                <div class="card-header text-white bg-warning">
+                  <span class="fa fa-warning"></span> Billing disabled
+                </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    To accept payment for subscriptions, please
+                    <a href="{{urls.provider.bank}}">connect a payment processor &raquo;</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </monthly-revenue>
+
+          {% if urls and urls.rules and urls.rules.api_engagement %}
+          <user-aggregate-engagement inline-template id="engagement-users-container" class="px-0 d-flex flex-wrap">
+            <div>
+              <!-- DAU Charts -->
+              <div class="card w-100 mb-4">
+                <div class="card-body">
+                  <div class="justify-content-center">
+                    <h5 class="card-title text-center">{% trans %}Daily Active Users{% endtrans %}</h5>
+                  </div>
+                  <div class="align-items-center justify-content-center h-75">
+                    <h2 class="text-center" v-show="!itemLoaded"><i class="fa fa-refresh fa-spin"></i></h2>
+                    <h2 class="text-center" v-show="itemLoaded" v-cloak>[[item.active_users]]</h2>
+                    <div class="text-warning" v-show="itemLoaded && item.authentication && item.authentication !=='enabled'" v-cloak>
+                      <span class="fa fa-warning"></span> authentication is <span class="text-danger">[[item.authentication]]</span>. Go to the rules page to <a href="{{urls.rules.app}}">enable registration &raquo;</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Engagement Charts -->
+              <div class="card w-100 mb-4">
+                <div class="card-body">
+                  <div class="justify-content-center">
+                    <h5 class="card-title text-center">{% trans %}Engagement{% endtrans %}</h5>
+                  </div>
+                  <div class="align-items-center justify-content-center py-5 h-75">
+                    <h2 class="text-center" v-show="!itemLoaded"><i class="fa fa-refresh fa-spin"></i></h2>
+                    <div class="p-0" v-if="itemLoaded && item.engagements.length === 0" v-cloak>
+                      <p class="card-text text-center text-muted">
+                        {% trans %}No engagement data{% endtrans %}
+                      </p>
+                    </div>
+                    <div class="p-0" v-show="itemLoaded && item.engagements.length > 0" v-cloak>
+                      <svg ref="engagementChart"></svg>
+                    </div>
+                    <div class="text-center">
+                      <a href="{{urls.rules.view_user_engagement}}">details ...</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </user-aggregate-engagement>
+          {% endif %}
+        </div>
+      </div><!-- /row -->
+    </div>
+  </section>
+{% endblock %}

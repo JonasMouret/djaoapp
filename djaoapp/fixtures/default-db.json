@@ -1,0 +1,1355 @@
+[
+{
+    "fields": {
+      "slug": "stripe",
+      "full_name": "Stripe",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "stripe@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "185 Berry St #550",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94107",
+      "country": "US",
+      "processor": 1,
+      "is_provider": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 1
+},
+{
+    "fields": {
+      "slug": "terms-of-use",
+      "title": "Terms Of Use",
+      "modified": "2016-05-01T00:00:00-09:00"
+    },
+    "model": "saas.agreement", "pk": 1
+},
+{
+    "fields": {
+      "slug": "djaoapp",
+      "full_name": "DjaoDjin",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "djaoapp@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_provider": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 2
+},
+{
+    "fields": {
+      "slug": "djaodjin",
+      "full_name": "DjaoDjin",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "djaodjin@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_provider": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 3
+},
+{
+    "fields": {
+      "slug": "security",
+      "title": "Security Policy",
+      "modified": "2021-01-01T00:00:00+00:00"
+    },
+    "model": "saas.agreement", "pk": 2
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "slug": "manager",
+      "title": "Profile Manager"
+    },
+    "model": "saas.RoleDescription", "pk": 1
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "organization": 2,
+      "slug": "contributor",
+      "title": "Contributor"
+    },
+    "model": "saas.RoleDescription", "pk": 2
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "slug": "viewer",
+      "title": "Viewer"
+    },
+    "model": "saas.RoleDescription", "pk": 3
+},
+{
+    "fields": {
+        "slug":"managed",
+        "title":"Managed",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "period_type": 4,
+        "period_amount": 1000,
+        "description": "To take screenshot of checkout pages",
+        "organization": 2,
+        "is_active" : 1
+    },
+    "model" : "saas.Plan", "pk": 1
+},
+{
+    "fields":{
+        "slug":"basic",
+        "title":"Basic",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "setup_amount": 0,
+        "period_amount": 24900,
+        "broker_fee_percent": 0,
+        "period_type": 4,
+        "description":"Ideal to focus on Dev and fully leverage DjaoDjin Ops infrastructure.\n\n* Streetside Subscription Firewall\n* Docker Hosting\n* Micro-service load balancer\n",
+        "organization": 2,
+        "is_active": 1
+    },
+    "model" : "saas.Plan", "pk": 2
+},
+{
+  "fields": {
+    "plan": 2,
+    "discount_type": 1,
+    "discount_value": 1000,
+    "length": 12
+  },
+  "model": "saas.AdvanceDiscount", "pk": 1
+},
+{
+    "fields":{
+        "slug":"premium",
+        "title":"Premium",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "setup_amount": 0,
+        "period_amount": 18900,
+        "broker_fee_percent": 0,
+        "period_type": 4,
+        "description":"Ideal to transform your website into a fully featured Software-as-a-Service.\n\n* Setup in minutes\n* Custom Themes\n* Secure Custom Domain\n",
+        "organization": 2,
+        "is_active" : 1
+    },
+    "model" : "saas.Plan", "pk": 3
+},
+{
+  "fields": {
+    "plan": 3,
+    "discount_type": 3,
+    "discount_value": 1,
+    "length": 12
+  },
+  "model": "saas.AdvanceDiscount", "pk": 2
+},
+{
+    "fields":{
+        "code": "DIS100",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "discount_type": 1,
+        "discount_value": 10000,
+        "organization": 2
+    },
+    "model" : "saas.Coupon", "pk": 1
+},
+{
+    "fields":{
+        "code": "HALLOWEEN",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "discount_type": 1,
+        "discount_value": 5000,
+        "organization": 2
+    },
+    "model" : "saas.Coupon", "pk": 2
+},
+{
+    "fields":{
+        "code": "BASIC50",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "plan": 2,
+        "discount_type": 1,
+        "discount_value": 5000,
+        "organization": 2
+    },
+    "model" : "saas.Coupon", "pk": 3
+},
+{
+    "fields": {
+      "domain": "localhost:8020",
+      "name": "dev"
+    },
+    "model": "sites.site", "pk": 1
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "alice@localhost.localdomain",
+      "first_name": "Alice",
+      "last_name": "Cooper",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "alice"
+    },
+    "model": "auth.User", "pk": 1
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 1
+    },
+    "model": "saas.signature", "pk": 1
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "donny@localhost.localdomain",
+      "first_name": "Donny",
+      "last_name": "Cooper",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "donny"
+    },
+    "model": "auth.User", "pk": 2
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 2
+    },
+    "model": "saas.signature", "pk": 2
+},
+{
+    "fields": {
+      "slug": "alice",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "user": 1,
+      "picture": "/static/img/alice.jpg"
+    },
+    "model": "signup.Contact", "pk": 1
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "yan@localhost.localdomain",
+      "first_name": "Yan",
+      "last_name": "Lee",
+      "groups": [],
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "yan"
+    },
+    "model": "auth.User", "pk": 3
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 3
+    },
+    "model": "saas.signature", "pk": 3
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 2,
+      "user": 1
+    },
+    "model": "saas.Role", "pk": 3
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "kenneth@localhost.localdomain",
+      "first_name": "Kenneth",
+      "last_name": "Contributor",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=",
+      "username": "kenneth"
+    },
+    "model": "auth.User", "pk": 4
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 4
+    },
+    "model": "saas.signature", "pk": 4
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 2,
+      "organization": 2,
+      "user": 4
+    },
+    "model": "saas.Role", "pk": 4
+},
+{
+    "fields": {
+      "slug": "cowork",
+      "email": "cowork@localhost.localdomain",
+      "full_name": "Cowork",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "processor": 1,
+      "is_provider": 0,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 4
+},
+{
+    "fields": {
+      "slug": "xia-card7",
+      "full_name": "Xia Card7",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "xia+card7@localhost.localdomain",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 5
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00-09:00",
+      "organization": 4,
+      "plan": 3
+    },
+    "model": "saas.subscription", "pk": 3
+},
+{
+    "fields": {
+      "slug": "djaoapp",
+      "is_active": true,
+      "account": 2,
+      "domain": null,
+      "tag": "streetside"
+    },
+    "model": "multitier.Site", "pk": 1
+},
+{
+    "fields": {
+      "slug": "cowork",
+      "is_active": true,
+      "account": 4,
+      "domain": null,
+      "is_path_prefix": true,
+      "db_name": "cowork",
+      "tag": "streetside"
+    },
+    "model": "multitier.Site", "pk": 3
+},
+{
+    "fields": {
+      "slug": "djaoapp",
+      "account": 2,
+      "authentication": 0,
+      "registration": 3
+    },
+    "model": "rules.App", "pk": 1
+},
+{
+    "fields": {
+        "app": 1,
+        "rank": 1,
+        "path": "/app/",
+        "rule_op": 1,
+        "is_forward": false,
+        "engaged": "app"
+    },
+    "model": "rules.Rule", "pk": 1
+},
+{
+    "fields": {
+        "app": 1,
+        "rank": 2,
+        "path": "/forward/:organization/",
+        "rule_op": 1,
+        "is_forward": true
+    },
+    "model": "rules.Rule", "pk": 2
+},
+{
+    "fields": {
+        "app": 1,
+        "rank": 3,
+        "path": "/",
+        "rule_op": 0,
+        "is_forward": false
+    },
+    "model": "rules.Rule", "pk": 3
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "full_name": "Marie",
+      "email": "marie@localhost.localdomain",
+      "slug": "marie"
+    },
+    "model": "signup.Contact", "pk": 3
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "xia@localhost.localdomain",
+      "first_name": "Xia",
+      "last_name": "Lee",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=",
+      "username": "xia"
+    },
+    "model": "auth.User", "pk": 5
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 5
+    },
+    "model": "saas.signature", "pk": 5
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "xia@localhost.localdomain",
+      "slug": "xia",
+      "nick_name": "Xia",
+      "user": 5
+    },
+    "model": "signup.Contact", "pk": 5
+},
+{
+    "fields": {
+      "slug": "xia",
+      "full_name": "Xia Lee",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "xia@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 6
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 6,
+      "user": 5
+    },
+    "model": "saas.Role", "pk": 5
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "joe@localhost.localdomain",
+      "first_name": "Joe",
+      "last_name": "Smith",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "joe"
+    },
+    "model": "auth.User", "pk": 6
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 6
+    },
+    "model": "saas.signature", "pk": 6
+},
+{
+    "fields": {
+      "slug": "joe-bulk",
+      "full_name": "Joe Bulk Buying",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "joe+bulk@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1,
+      "is_bulk_buyer": 1
+    },
+    "model": "saas.Organization", "pk": 7
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 7,
+      "user": 6
+    },
+    "model": "saas.Role", "pk": 6
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "asmith@localhost.localdomain",
+      "first_name": "Amelie",
+      "groups": [],
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "last_name": "Smith",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "asmith"
+    },
+    "model": "auth.User", "pk": 7
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 7
+    },
+    "model": "saas.signature", "pk": 7
+},
+{
+    "fields": {
+      "slug": "asmith",
+      "full_name": "Amelie Smith",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "asmith@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1,
+      "picture": "/static/img/amelie.jpg"
+    },
+    "model": "saas.Organization", "pk": 8
+},
+{
+    "fields": {
+      "slug": "asmith",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "user": 7,
+      "picture": "/static/img/amelie.jpg"
+    },
+    "model": "signup.Contact", "pk": 7
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 8,
+      "user": 7
+    },
+    "model": "saas.Role", "pk": 7
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": null,
+      "organization": 4,
+      "user": 7,
+      "request_key": "a00000d0a0000001234567890123456789012345"
+    },
+    "model": "saas.Role", "pk": 8
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 8,
+      "plan": 2
+    },
+    "model": "saas.subscription", "pk": 7
+},
+{
+    "fields": {
+      "slug": "stephanie",
+      "full_name": "Stephanie DuJardin",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "stephanie@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 9
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "stephanie@localhost.localdomain",
+      "first_name": "Stephanie",
+      "groups": [],
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "last_name": "DuJardin",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "stephanie"
+    },
+    "model": "auth.User", "pk": 8
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 8
+    },
+    "model": "saas.signature", "pk": 8
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 9,
+      "user": 8
+    },
+    "model": "saas.Role", "pk": 9
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 4,
+      "user": 2
+    },
+    "model": "saas.Role", "pk": 10
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 9,
+      "plan": 2
+    },
+    "model": "saas.subscription", "pk": 8
+},
+{
+    "fields": {
+      "slug": "to-be-deleted-1",
+      "full_name": "Subscriber ToBeDeleted",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "to-be-deleted-1@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 10
+},
+{
+    "fields": {
+      "slug": "to-be-deleted-2",
+      "full_name": "2nd Subscriber ToBeDeleted",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "to-be-deleted-2@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 11
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "needactive@localhost.localdomain",
+      "first_name": "Stephanie",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_name": "NeedActive",
+      "password": "!",
+      "username": "needactive"
+    },
+    "model": "auth.User", "pk": 9
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "user": 9,
+      "email_verification_key": "16793aa72a4c7ae94b50b20c2eca52df5b0fe2c6"
+    },
+    "model": "signup.Contact", "pk": 9
+},
+{
+    "fields": {
+      "username": "to-be-deleted-2",
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "to-be-deleted-2@localhost.localdomain",
+      "first_name": "Xia",
+      "last_name": "Lee",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2021-01-01T00:00:00+00:00",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc="
+    },
+    "model": "auth.User", "pk": 10
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 11,
+      "user": 10
+    },
+    "model": "saas.Role", "pk": 11
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 11,
+      "plan": 3
+    },
+    "model": "saas.subscription", "pk": 10
+},
+{
+    "fields": {
+      "slug": "subscriber-5",
+      "full_name": "Subscriber Five",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "subscriber-5@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 12
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 12,
+      "plan": 3
+    },
+    "model": "saas.subscription", "pk": 11
+},
+{
+    "fields": {
+      "slug": "dibaggio-parents",
+      "email": "dibaggio-parents@localhost.localdomain",
+      "full_name": "Di Baggio Middle School Parents Association",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "processor": 1,
+      "is_provider": 1,
+      "is_active": 1
+    },
+    "model": "saas.Organization", "pk": 13
+},
+{
+    "fields":{
+        "slug":"standard",
+        "title":"Di Baggio Middle School Parents Association",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "setup_amount":0,
+        "period_amount":18900,
+        "broker_fee_percent": 0,
+        "period_type": 5,
+        "description":"",
+        "organization" : 12,
+        "is_active" : 1
+    },
+    "model" : "saas.Plan", "pk": 12
+},
+{
+    "fields": {
+      "slug": "tennis-club",
+      "email": "tennis-club@localhost.localdomain",
+      "full_name": "Tennis Club of North Beach",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "processor": 1,
+      "is_provider": 1,
+      "is_active": 1,
+      "extra": "This profile is used for testing optins and taking screenshots of checkout / balance due."
+    },
+    "model": "saas.Organization", "pk": 14
+},
+{
+    "fields":{
+        "slug": "tennis-club",
+        "title":"Tennis Club of North Beach",
+        "created_at": "2021-01-01T00:00:00+00:00",
+        "setup_amount":0,
+        "period_amount":18900,
+        "broker_fee_percent": 0,
+        "period_type": 5,
+        "description":"",
+        "organization" : 14,
+        "is_active" : 1
+    },
+    "model" : "saas.Plan", "pk": 13
+},
+{
+    "fields":{
+        "code": "HALLOWEEN",
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "discount_type": 1,
+        "discount_value": 5000,
+        "organization": 14
+    },
+    "model" : "saas.Coupon", "pk": 4
+},
+{
+    "fields": {
+      "slug": "yoga-club",
+      "email": "yoga-club@localhost.localdomain",
+      "full_name": "Yoga Club",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "processor": 1,
+      "is_provider": 1,
+      "is_active": 1,
+      "processor_deposit_key": "sk_deposit_abcdef123456789abcdef123",
+      "extra": "This profile is used for taking screenshots when organization has an associated processor account."
+    },
+    "model": "saas.Organization", "pk": 15
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "slug": "registration-card3",
+      "email": "registration+card3@localhost.localdomain",
+      "full_name": "Registration Card 3",
+      "street_address": "1 ABC Loop Dr.",
+      "locality": "San Francisco",
+      "postal_code": "94333",
+      "processor": 1,
+      "is_active": 1,
+      "extra": "Register and personal/organization profile already exists (Failures)"
+    },
+    "model": "saas.Organization", "pk": 16
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 6,
+      "plan": 12
+    },
+    "model": "saas.subscription", "pk": 12
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 6,
+      "plan": 13
+    },
+    "model": "saas.subscription", "pk": 13
+},
+{
+    "fields":{
+        "created_at":"2021-01-01T00:00:00+00:00",
+        "user": 5,
+        "plan": 1,
+        "coupon": 2,
+        "recorded": 1
+    },
+    "model" : "saas.CartItem", "pk": 1
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 6,
+      "plan": 1
+    },
+    "model": "saas.subscription", "pk": 1
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 5,
+      "plan": 1
+    },
+    "model": "saas.subscription", "pk": 2
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "dest_amount": 13800,
+      "dest_unit": "usd",
+      "dest_account": "Payable",
+      "dest_organization": 5,
+      "orig_amount": 13800,
+      "orig_unit": "usd",
+      "orig_account": "Receivable",
+      "orig_organization": 2,
+      "event_id": "sub_2/"
+    },
+    "model": "saas.transaction", "pk": 1
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:01+00:00",
+      "dest_amount": 6900,
+      "dest_unit": "usd",
+      "dest_account": "Liability",
+      "dest_organization": 5,
+      "orig_amount": 6900,
+      "orig_unit": "usd",
+      "orig_account": "Payable",
+      "orig_organization": 4,
+      "event_id": "sub_2/"
+    },
+    "model": "saas.transaction", "pk": 2
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "melissa@localhost.localdomain",
+      "first_name": "Melissa",
+      "last_name": "Xia NoOrg",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=",
+      "username": "melissa"
+    },
+    "model": "auth.User", "pk": 11
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 11
+    },
+    "model": "saas.signature", "pk": 11
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "brett@localhost.localdomain",
+      "first_name": "Brett",
+      "last_name": "",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=",
+      "username": "brett"
+    },
+    "model": "auth.User", "pk": 13
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 13
+    },
+    "model": "saas.signature", "pk": 13
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 4,
+      "user": 13,
+      "grant_key": "b0e0000000ed0123456789012345678901234578"
+    },
+    "model": "saas.Role", "pk": 13
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 2,
+      "user": 13
+    },
+    "model": "saas.Role", "pk": 14
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "organization": 5,
+      "user": 13,
+      "request_key": "b0e000e00e0001234567890123456789012345"
+    },
+    "model": "saas.Role", "pk": 15
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 6,
+      "user": 13,
+      "request_key": "1234567890123456789012345b0e000e00e000"
+    },
+    "model": "saas.Role", "pk": 16
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "joey@localhost.localdomain",
+      "first_name": "Joey",
+      "last_name": "create profile on subscription",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=",
+      "username": "joey"
+    },
+    "model": "auth.User", "pk": 14
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 14
+    },
+    "model": "saas.signature", "pk": 14
+},
+{
+    "fields": {
+      "slug": "contact_requested_notice",
+      "title": "Messages through the website contact page",
+      "description": "By enabling this notification, you will receive e-mails when a user contacts the website owner through the contact page."
+    },
+    "model": "signup.Notification", "pk": 1
+},
+{
+    "fields": {
+      "slug": "user_registered_notice",
+      "title": "A new user has registered",
+      "description": "By enabling this notification, you will receive e-mails when a new user has registered to the website."
+    },
+    "model": "signup.Notification", "pk": 2
+},
+{
+    "fields": {
+      "slug": "user_activated_notice",
+      "title": "A user has activated his/her account",
+      "description": "By enabling this notification, you will receive e-mails when a user has activated their account on the website and are now able to login."
+    },
+    "model": "signup.Notification", "pk": 3
+},
+{
+    "fields": {
+      "slug": "charge_updated",
+      "title": "A charge has been created or updated",
+      "description": "By enabling this notification, you will receive e-mails when a charge has been created or a refund on a previously given charge given."
+    },
+    "model": "signup.Notification", "pk": 4
+},
+{
+    "fields": {
+      "slug": "card_updated",
+      "title": "A credit card on file has been updated",
+      "description": "By enabling this notification, you will receive e-mails when a credit card on file has been updated."
+    },
+    "model": "signup.Notification", "pk": 5
+},
+{
+    "fields": {
+      "slug": "order_executed",
+      "title": "A order has been placed",
+      "description": "By enabling this notification, you will receive e-mails when an order has been placed. It is sent regardless of the charge being successful or not."
+    },
+    "model": "signup.Notification", "pk": 6
+},
+{
+    "fields": {
+      "slug": "organization_updated",
+      "title": "A billing profile has been updated",
+      "description": "By enabling this notification, you will receive e-mails when fields such as name, address, etc. have been updated."
+    },
+    "model": "signup.Notification", "pk": 7
+},
+{
+    "fields": {
+      "slug": "expires_soon",
+      "title": "A subscription is about to expires",
+      "description": "By enabling this notification, you will receive e-mails when a subscription is about to expire."
+    },
+    "model": "signup.Notification", "pk": 8
+},
+
+{
+    "fields": {
+      "slug": "stephanie2",
+      "full_name": "Stephanie DuJardin",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "stephanie2@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1,
+      "extra": "saas-subscribe: Card 2"
+    },
+    "model": "saas.Organization", "pk": 17
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "stephanie2@localhost.localdomain",
+      "first_name": "Stephanie",
+      "last_name": "DuJardin",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "stephanie2"
+    },
+    "model": "auth.User", "pk": 17
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 17
+    },
+    "model": "saas.signature", "pk": 17
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 17,
+      "user": 17
+    },
+    "model": "saas.Role", "pk": 17
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 17,
+      "plan": 3
+    },
+    "model": "saas.subscription", "pk": 17
+},
+
+{
+    "fields": {
+      "slug": "stephanie3",
+      "full_name": "Stephanie DuJardin",
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "email": "stephanie3@localhost.localdomain",
+      "phone": "+14155555555",
+      "street_address": "350 Bay St.",
+      "locality":  "San Francisco",
+      "region": "CA",
+      "postal_code": "94133",
+      "country": "US",
+      "processor": 1,
+      "is_active": 1,
+      "extra": "saas-subscribe: Card 3"
+    },
+    "model": "saas.Organization", "pk": 18
+},
+{
+    "fields": {
+      "date_joined": "2021-01-01T00:00:00+00:00",
+      "email": "stephanie3@localhost.localdomain",
+      "first_name": "Stephanie",
+      "last_name": "DuJardin",
+      "password": "pbkdf2_sha256$10000$z0MBiWn0Rlem$iZdC6uHomlE07qGK/TqfcfxNzKJtFp03c0JILF1frRc=", 
+      "username": "stephanie3"
+    },
+    "model": "auth.User", "pk": 18
+},
+{
+    "fields": {
+      "last_signed": "2021-01-01T00:00:00+00:00",
+      "agreement": 1,
+      "user": 18
+    },
+    "model": "saas.signature", "pk": 18
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "role_description": 1,
+      "organization": 18,
+      "user": 18
+    },
+    "model": "saas.Role", "pk": 18
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 18,
+      "plan": 3
+    },
+    "model": "saas.subscription", "pk": 18
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 18,
+      "plan": 3,
+      "extra": "bogus duplicate subscription"
+    },
+    "model": "saas.subscription", "pk": 19
+},
+{
+    "fields":{
+        "created_at": "2021-01-01T00:00:00+00:00",
+        "user": 2,
+        "plan": 1,
+        "recorded": 0
+    },
+    "model" : "saas.CartItem", "pk": 2
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "ends_at": "2022-01-01T00:00:00+00:00",
+      "organization": 14,
+      "plan": 1
+    },
+    "model": "saas.subscription", "pk": 4
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:00+00:00",
+      "dest_amount": 1000,
+      "dest_unit": "usd",
+      "dest_account": "Payable",
+      "dest_organization": 14,
+      "orig_amount": 1000,
+      "orig_unit": "usd",
+      "orig_account": "Receivable",
+      "orig_organization": 2,
+      "event_id": "sub_4/"
+    },
+    "model": "saas.transaction", "pk": 3
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:01+00:00",
+      "dest_amount": 1000,
+      "dest_unit": "usd",
+      "dest_account": "Funds",
+      "dest_organization": 1,
+      "orig_amount": 1000,
+      "orig_unit": "usd",
+      "orig_account": "Liability",
+      "orig_organization": 14,
+      "event_id": "cha_1"
+    },
+    "model": "saas.transaction", "pk": 4
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:01+00:00",
+      "dest_amount": 1000,
+      "dest_unit": "usd",
+      "dest_account": "Liability",
+      "dest_organization": 14,
+      "orig_amount": 1000,
+      "orig_unit": "usd",
+      "orig_account": "Payable",
+      "orig_organization": 14,
+      "event_id": "sub_4/"
+    },
+    "model": "saas.transaction", "pk": 5
+},
+{
+    "fields": {
+      "created_at": "2021-01-01T00:00:03-00:00",
+      "dest_amount": 1000,
+      "dest_unit": "usd",
+      "dest_account": "Payable",
+      "dest_organization": 14,
+      "orig_amount": 1000,
+      "orig_unit": "usd",
+      "orig_account": "Receivable",
+      "orig_organization": 2,
+      "event_id": "sub_4/"
+    },
+    "model": "saas.transaction", "pk": 6
+},
+{
+    "fields":{
+        "created_at": "2021-01-01T00:00:00-00:00",
+        "created_by": 2,
+        "amount": 1000,
+        "unit": "usd",
+        "customer": 14,
+        "description": "Monthly fee",
+        "last4": "1234",
+        "exp_date": "2021-01-01",
+        "card_name": "Donny",
+        "processor": 1,
+        "processor_key": "ch_abc123",
+        "state": 1
+    },
+    "model" : "saas.Charge", "pk": 1
+},
+{
+    "fields":{
+        "charge": 1,
+        "invoiced": 3
+    },
+    "model" : "saas.ChargeItem", "pk": 1
+}]

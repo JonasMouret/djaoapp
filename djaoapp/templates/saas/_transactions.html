@@ -1,0 +1,67 @@
+<section id="transactions">
+  <h3>{% trans %}Transactions{% endtrans %}</h3>
+
+  <form class="form mt-3">
+    <div class="form-row">
+      {% include "saas/_filter.html" %}
+    </div>
+  </form>
+
+  <div class="table-responsive">
+
+    <!-- Start Data Tables -->
+    <table class="table table-striped mb-4" infinite-wrapper>
+      <thead>
+        <tr>
+          <th class="text-nowrap">
+            {% trans %}Date{% endtrans %}
+            <a href="#" class="text-nowrap btn-link btn-sort ml-2" @click.prevent="sortBy('created_at')">
+              <i :class="sortIcon('created_at')"></i>
+            </a>
+          </th>
+          <th class="text-nowrap">
+            {% trans %}Amount{% endtrans %}
+            <a href="#" class="btn-link btn-sort ml-2" @click.prevent="sortBy('amount')">
+              <i :class="sortIcon('amount')"></i>
+            </a>
+          </th>
+          <th class="text-nowrap">
+            {% trans %}Description{% endtrans %}
+            <a href="#" class="btn-link btn-sort ml-2" @click.prevent="sortBy('description')">
+              <i :class="sortIcon('description')"></i>
+            </a>
+          </th>
+        </tr>
+      </thead>
+
+      <!-- Show Loader -->
+      <tbody v-if="!itemsLoaded">
+        <tr>
+          <td colspan="4">
+            <h3  class="text-center"><i class="fa fa-refresh fa-spin"></i></h3>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-show="itemsLoaded && items.results.length == 0" v-cloak>
+        <tr>
+          <td colspan="4">
+            <h4 class="text-center"><em>{% trans %}No transactions{% endtrans %}<span v-show="params.q"> [[params.q]]</span></em></h4>
+          </td>
+        </tr>
+      </tbody>
+
+      <!-- Show Data Entries -->
+      <tbody id="has-transactions" v-show="itemsLoaded && items.results.length > 0" v-cloak>
+        <tr v-for="(entry, index) in items.results" :class="{'bg-info': isInfiniteScroll && params.page > 1 && (itemsPerPage * (params.page - 1)) === index}">
+          <td class="text-nowrap">[[humanizeDate(entry.created_at)]]</td>
+          <td :class="entry.is_debit ? 'text-danger' : ''">[[entry.amount]]</td>
+          <td class="text-nowrap" colspan="2" v-html="entry.description"></td>
+        </tr>
+      </tbody>
+
+    </table>
+
+    {% include "_pagination.html" %}
+
+  </div>
+</section>

@@ -1,0 +1,151 @@
+{% extends "saas/base_dashboard.html" %}
+
+{% block saas_title %}
+  {{organization.printable_name}} {% trans %}Coupons{% endtrans %}
+{% endblock %}
+
+{% block saas_content %}
+<coupon-list inline-template id="coupon-list-container">
+  <div class="container" data-trip data-trip-index="1" data-trip-content="<h2>{% trans %}Coupons{% endtrans %}</h2><p>{% trans %}Coupons are used to offer percentage discounts.<br />Create a coupon code with an associated discount percentage.<br />Distribute the coupon code to whoever is entitled<br />to a discount on their subscriptions. Users will be able to claim<br />the discount on the checkout page by entering the coupon code.{% endtrans %}</p><em>{% trans %}Use keyboard navigation or click 'Next' to move forward.{% endtrans %}</em>" data-trip-position="screen-center">
+
+      <form @submit.prevent="save">
+        <div class="row">
+          <!-- Create a New Coupon -->
+            <div class="col-md-3">
+              <div class="mr-2 mb-3 w-100">
+                <input type="text" class="form-control form-control-md" placeholder="{% trans %}Discount Code{% endtrans %}" v-model="newCoupon.code">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="mr-2 mb-3 w-100">
+                <input type="text" class="form-control form-control-md w-100" placeholder="{% trans %}Discount %{% endtrans %}" v-model="newCoupon.discount_value">
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <button type="submit" class="btn btn-primary btn-md w-100" data-trip data-trip-index="2" data-trip-content="<p>{% trans %}Add a coupon by entering a code, percentage and click 'Create Coupon'.{% endtrans %}</p>" data-trip-position="s">
+                {% trans %}Create Coupon{% endtrans %}
+              </button>
+            </div>
+
+          <!-- Download as .CSV -->
+          <div class="col-md-3 mb-3">
+            <div class="btn-actions text-right">
+              <a id="download" class="btn btn-secondary btn-md w-100" role="button" :href="'{{urls.provider.download_coupons}}' + getQueryString(['page'])"
+                data-trip data-trip-index="7" data-trip-content="<p>{% trans %}Download the list of coupons if necessary.{% endtrans %}</p>" data-trip-position="s">
+                <i class="fa fa-cloud-download mr-2"></i> {% trans %}Download .CSV{% endtrans %}
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <hr class="mt-0" />
+
+      <div class="row mt-3">
+        <!-- From/To/Match Filter Inputs -->
+        {% include "saas/_filter_col_3.html" %}
+
+        <div class="col-md-3">
+          <!-- Sort Coupons -->
+          <div class="pb-3">
+            <div class="input-group input-group-md">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{% trans %}Sort{% endtrans %}</span>
+              </div>
+              <select id="order-by" class="form-control" style="-webkit-appearance: none;">
+                <option value="code">{% trans %}Code (ascending){% endtrans %}</option>
+                <option value="-code">{% trans %}Code (descending){% endtrans %}</option>
+                <option value="discount_value">{% trans %}Discount (highest){% endtrans %}</option>
+                <option value="-discount_value">{% trans %}Discount (lowest){% endtrans %}</option>
+                <option value="ends_at">{% trans %}Expiration (soonest){% endtrans %}</option>
+                <option value="-ends_at">{% trans %}Expiration (latest){% endtrans %}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Loading Spinner -->
+      <div class="text-center py-5 my-5" v-show="!itemsLoaded">
+        <h3 class="text-center"><i class="fa fa-refresh fa-spin fa-2x"></i></h3>
+      </div>
+
+      <!-- No Coupons Found Msg -->
+      <div class="text-center" v-show="itemsLoaded && items.results.length === 0" v-cloak>
+        <h4 class="text-center"><em>{% trans %}No Coupons{% endtrans %}<span v-show="params.q"> [[params.q]]</span></em></h4>
+      </div>
+
+      <div class="row mb-4" id="coupon-list">
+        <div :id="entry.code" class="col-md-4 my-1" v-for="(entry, index) in items.results" v-show="itemsLoaded && items.results.length > 0" v-cloak>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="coupon-title">
+                <h5 class="card-title" data-trip data-trip-index="8" data-trip-content="<p>{% trans %}Click on a coupon code to see who has redeem it.{% endtrans %}</p>" data-trip-position="s"><a :href="'{{urls.provider.metrics_coupons}}' + entry.code + '/'">[[entry.code]]</a></h5>
+                <button class="btn btn-danger btn-sm remove ml-1" @click="remove(index)"><i class="fa fa-remove"></i></button>
+              </div>
+            </div>
+            <div class="list-group list-group-flush">
+              <div class="list-group-item">
+                <span class="text-muted">{% trans %}Discount{% endtrans %}:</span> [[(entry.discount_value / 100).toFixed(0)]]%
+              </div>
+              <div class="list-group-item">
+                <span class="text-muted">{% trans %}Expires At{% endtrans %}:</span> {% include "_entry_ends_at_field.html" %}
+              </div>
+              <div class="list-group-item">
+                  <span class="text-muted" v-show="!entry._editAttempts">{% trans %}Use limit{% endtrans %}:</span>
+                  <span @click="editAttempts(entry)"
+                    v-show="!entry._editAttempts">
+                    [[entry.nb_attempts ? entry.nb_attempts : '{% trans %}No limit{% endtrans %}']]
+                  </span>
+                  <input type="text" class="form-control"
+                      @blur="saveAttempts(entry)"
+                      @keyup.13="saveAttempts(entry)"
+                      v-model="entry.nb_attempts"
+                      :ref="'editAttempts_' + entry.code"
+                      v-show="entry._editAttempts">
+              </div>
+              <div class="list-group-item">
+                  <span class="text-muted" v-show="!entry._editPlan">{% trans %}Plan{% endtrans %}:</span>
+                  <span @click="editPlan(entry)"
+                    v-show="!entry._editPlan">
+                    [[entry.plan ? planTitle(entry.plan) : "{% trans %}No Plan{% endtrans %}"]]
+                  </span>
+                  <select class="form-control"
+                      @blur="savePlan(entry)"
+                      @keyup.13="savePlan(entry)"
+                      v-model="entry.plan"
+                      :ref="'editPlan_' + entry.code"
+                      v-show="entry._editPlan">
+                        <option value="">{% trans %}No Plan{% endtrans %}</option>
+                        <option :value="plan.slug" v-for="plan in plans">[[plan.title]]</option>
+                  </select>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-text" data-trip data-trip-index="4"
+              data-trip-content="<p>{% trans %}Add a description for you to easily remember.{% endtrans %}</p>"
+              data-trip-position="s">
+                  <span @click="editDescription(index)"
+                    v-show="!edit_description[index]">
+                      <i class="fa fa-pencil mr-3"></i>
+                      <span class="text-muted" v-if="!entry.description">{% trans %}Edit Description{% endtrans %}</span>
+                      [[entry.description]]
+                  </span>
+                  <input type="text" class="form-control"
+                    ref="edit_description_input"
+                    @keydown="saveDescription(entry, index, $event)"
+                    @blur="saveDescription(entry, index, $event)"
+                    v-model="entry.description"
+                    v-show="edit_description[index]">
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% include "_pagination.html" %}
+
+  </div>
+</coupon-list>
+{% endblock %}

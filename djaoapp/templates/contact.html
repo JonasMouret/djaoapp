@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container" style="margin-bottom: 50px;">
+    <div class="col-md-6 offset-md-3 col-lg-6">
+      <div class="page-header">
+        <h1 class="text-center"><i class="fa fa-envelope"></i>
+          {% trans %}Contact us{% endtrans %}
+        </h1>
+      </div>
+      <p>
+        {% trans %}Please leave your name and email address.{% endtrans %}
+        {% trans %}We do our best to reply to each request individually within 24 hours. Thank you!{% endtrans %}
+      </p>
+      {% if form %}
+        {% include "_contact_form.html" %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block bodyscripts %}
+<!-- The following block submits through the "contact us" through the API.
+<script type="text/javascript" src="/static/js/djaodjin-resources.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    var elm = $("form");
+    elm.submit(function(event) {
+        var self = this;
+        var data = {};
+        event.preventDefault();
+        var fields = $(self).find('[name]').not('[name="csrfmiddlewaretoken"]');
+        for( var fieldIdx = 0; fieldIdx < fields.length; ++fieldIdx ) {
+            var field = $(fields[fieldIdx]); // XXX jQuery
+            var fieldName = field.attr('name');
+            var fieldValue = field.attr('type') === 'checkbox' ?
+                field.prop('checked') : field.val();
+            data[fieldName] = fieldValue;
+        }
+        $.ajax({
+          method: 'POST',
+          url: '{{urls.api_contact_us}}',
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+        }).done(function(resp) {
+            showMessages([resp.detail], "info");
+        }).fail(function(resp) {
+            showErrorMessages(resp);
+        });
+        return false;
+    });
+});
+</script>
+-->
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "saas/base_dashboard.html" %}
+
+{% block saas_title %}{% trans %}Charge receipt{% endtrans %}{% endblock %}
+
+{% block saas_content %}
+<div class="row" style="margin-bottom: 15px;">
+    <div class="col-sm-10">
+        <div class="btn-group pull-right">
+            <a id="email-charge-receipt" class="btn btn-secondary" href="">{% trans %}Email Again{% endtrans %}</a>
+            <a id="charge-printable" class="btn btn-secondary" target="_blank"
+   href="{{urls.charge.printable_receipt}}">{% trans %}Printable{% endtrans %}</a>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+  <div id="{{charge}}">
+    <section id="status">
+      <p>
+{% trans created_at=charge.created_at, price=charge.price|humanize_money %}On {{created_at}}, we attempted to charge your card for the amount of {{price}}.{% endtrans %}
+      </p>
+      <p class="charge-status"
+         data-charge-done="{% trans %}The charge succeeded.{% endtrans %}"
+         data-charge-failed="{% trans %}The charge failed.{% endtrans %}"
+         data-charge-disputed="{% trans %}The charge was disputed.{% endtrans %}"
+         data-charge-created="{% trans %}The charge is in progress...{% endtrans %}">
+        {% if charge.is_paid %}
+        {% trans %}The charge succeeded.{% endtrans %}
+        {% elif charge.is_failed %}
+        {% trans %}The charge failed.{% endtrans %}
+        {% elif charge.is_disputed %}
+        {% trans %}The charge was disputed.{% endtrans %}
+        {% elif charge.is_progress %}
+        {% trans %}The charge is in progress...{% endtrans %} <i class="fa fa-spin"></i>
+        {% endif %}
+      </p>
+    </section>
+    <section class="info">
+    <dl class="dl-horizontal">
+      <dt>{% trans %}REFERENCE{% endtrans %}</dt>
+      <dd>#{{charge.processor_key}}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>{% trans %}amount{% endtrans %}</dt>
+      <dd id="amount-info">{{charge.price|humanize_money}}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>{% trans %}card{% endtrans %}</dt>
+      <dd>**** - {{last4}}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+      <dt>{% trans %}expires{% endtrans %}</dt>
+      <dd>{{exp_date}}</dd>
+    </dl>
+    </section>
+  </div>
+  <section id="invoiced_items">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{% trans %}Amount{% endtrans %}</th>
+          <th>{% trans %}Description{% endtrans %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line in charge_items %}
+        <tr>
+          <td>{{line.invoiced.dest_price|humanize_money}}</td>
+          <td>{{line.invoiced|describe}}</td>
+          <td>
+            {% if line.refundable %}
+            <button class="charge-refund btn btn-secondary"
+                    data-toggle="modal" data-target="#charge-refund"
+                    data-available-amount="{{line.invoiced.dest_amount}}"
+                    data-linenum="{{line.rank}}">{% trans %}Refund{% endtrans %}</button>
+            {% endif %}
+          </td>
+        </tr>
+        {% for refund in line.refunded %}
+        <tr>
+          <td>-{{refund.orig_price|humanize_money}}</td>
+          <td>{{refund|describe}}</td>
+          <td>
+          </td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% if next_url %}
+<div>
+    <a class="pull-right" href="{{next_url}}">{% trans %}Next{% endtrans %} &gt;</a>
+</div>
+{% endif %}
+<!-- modal dialog for Refunds -->
+<form id="charge-refund" class="modal fade"
+     tabindex="-1" role="dialog" aria-labelledby="{% trans %}Refund{% endtrans %}" aria-hidden="true"
+     method="post" action=".">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{% trans %}Refund{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="controls">
+                        <input class="form-control"
+                               type="number" name="amount" maxlength="32"
+                               min="0" value="0" />
+                    </div>
+                </div>
+                <div>
+                    <p>
+{% trans unit=charge.unit %}Please specify the amount you would like refunded (in {{unit}}).{% endtrans %}
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                <button type="submit" class="submit-refund btn btn-primary"
+                        data-dismiss="modal">{% trans %}OK{% endtrans %}</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- end of modal dialog for Refunds -->
+{% endblock %}

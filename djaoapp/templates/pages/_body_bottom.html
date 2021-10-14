@@ -1,0 +1,101 @@
+<link rel="stylesheet" media="screen" href="{{'/static/cache/pages.css'|asset}}" />
+
+{# Scripts that need to be injected into the page actually being edited #}
+{# (i.e. iframe or current page).                                       #}
+
+{# templates and PageElement editors #}
+<script type="text/javascript">
+{% if templates %}
+templateNames = {{templates|safe}};
+{% endif %}
+
+jQuery(document).ready(function($) {
+
+  var addPlan = $(".plan").last() /* by convention */;
+  addPlan.removeClass("plan");
+  addPlan.find(".editable-plan").removeClass("editable-plan");
+  addPlan.find("[data-key='title']").html("{% trans %}Add Plan{% endtrans %}");
+  addPlan.find("[data-key='period_amount']").html("");
+  addPlan.find("[data-key='period_type']").html("");
+  addPlan.find("[data-key='description']").html('<p class="text-center"><i class="fa fa-plus fa-5x"></i></p>');
+  addPlan.find("[data-key='period_amount']").html("");
+  addPlan.find(".plan-footer a").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+  addPlan.click(function(event) {
+       event.preventDefault();
+       $(this).plan({
+           saas_api_plan: "{{urls.edit.api_plans}}",
+           message_created: "{% trans %}Plan was created successfully.{% endtrans %}",
+           message_deleted: "{% trans %}Plan was successfully deleted.{% endtrans %}",
+           template_new: {
+               title: "{% trans %}New Plan{% endtrans %}",
+               description: "{% trans %}Write the description of the plan here.{% endtrans %}",
+               period_type: "monthly",
+               is_active: 1
+           }
+       }).create(true); /* XXX requires assets js_saas in page. */
+       /* XXX relaod=true, really ugly but will do until we integrate vuejs. */
+  });
+  addPlan.show();
+
+  $(".plan").editPlan({
+      baseUrl: "{{urls.edit.api_plans}}",
+      baseEditPlanUrl: "{{urls.edit.plan_update_base}}"
+  });
+
+  $(".editable-plan").editor({
+    baseUrl: "{{urls.edit.api_plans}}",
+    uniqueIdentifier: "data-plan",
+    rangeUpdate: function(editable, newVal){
+            var text = "{% trans %}per month{% endtrans %}";
+            newVal = parseInt(newVal);
+            if (newVal === 1){
+                text = "{% trans %}per hour{% endtrans %}";
+            }else if (newVal === 2){
+                text = "{% trans %}per day{% endtrans %}";
+            }else if (newVal === 3){
+                text = "{% trans %}per week{% endtrans %}";
+            }else if (newVal === 4){
+                text = "{% trans %}per month{% endtrans %}";
+            }else if (newVal === 5){
+                text = "{% trans %}per year{% endtrans %}";
+            }
+            editable.text(text);
+     },
+     onSuccess: function(self, response){
+            // Update slug of plan for new request.
+            var initialSlug = self.$el.attr("data-plan");
+            if (response.slug !== initialSlug){
+                $("[data-plan=\"" + initialSlug + "\"]").attr("data-plan", response.slug);
+            }
+        },
+        rangePosition: "bottom",
+        delayMarkdownInit: 200
+  });
+
+  $('.editable').editor({
+    baseUrl: '{{urls.edit.api_page_element_base}}',
+    emptyInputText: "{% trans %}placeholder, type to overwrite...{% endtrans %}",
+    hints: {{templates|safe}}
+  });
+});
+</script>
+
+{# For the style editors #}
+<script type="text/javascript">
+less = {
+    env: "development",
+    async: false,
+    fileAsync: false,
+    functions: {},
+    dumpLineNumbers: "comments",
+    onReady: false,
+    relativeUrls: false,
+    {% if access_key %}
+    rootpath: "{{urls.edit.api_medias}}{{media_prefix}}{% if media_prefix %}/{% endif %}"
+    {% else %}
+    rootpath: "/static/cache/"
+    {% endif %}
+};
+</script>
+
+{{ render_bundle('js_pages') }}

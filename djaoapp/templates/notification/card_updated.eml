@@ -1,0 +1,18 @@
+{% extends "notification/base.eml" %}
+
+{% block subject %}
+{% trans %}Credit card updated{% endtrans %}
+{% endblock %}
+
+{% block html_content %}
+<h3>{% trans %}Credit card updated{% endtrans %}</h3>
+<p>
+{% trans name=organization.printable_name %}The {{name}} credit card has been successfully updated.{% endtrans %}
+<br>
+<br>
+{% trans %}Old{% endtrans %} : <em>****-{{old_card.last4}}</em>, {% trans exp_date=old_card.exp_date %}exp: {{exp_date}}{% endtrans %}
+<br>
+<b>{% trans %}New{% endtrans %} : <em>****-{{new_card.last4}}</em>, {% trans exp_date=new_card.exp_date%}exp: {{exp_date}}{% endtrans %}</b>
+</p>
+
+{% endblock %}

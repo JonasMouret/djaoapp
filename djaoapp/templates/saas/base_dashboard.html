@@ -1,0 +1,104 @@
+{% extends "saas/base.html" %}
+
+{% block saas_localheader %}
+<link rel="stylesheet" media="screen" href="{{'/static/cache/dashboard.css'|asset}}" />
+{% endblock %}
+
+{% block navbar_extra_classes %}dashboard-nav-color-theme {% endblock %}
+
+{% block dashboard_inner_container_classes %}dashboard-inner-container{% endblock %}
+
+{# XXX next is for ichamp until we re-test everything #}
+
+{% block dashboard_inner_classes %} class="dashboard-inner-container"{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block sidebar %}
+{% include "saas/_sidebar.html" %}
+<hr class="d-md-none" />
+<ul class="nav flex-column d-md-none">
+    {% include "_generic_navbar.html" %}
+</ul>
+{% endblock %}
+
+{% block content %}
+<div id="app">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-header">
+          <h3 class="mb-0">
+            {% block saas_title %}{% endblock %}
+            <div class="d-inline">
+              <sup style="display: none;font-size:0.5em;cursor:pointer;">
+                <i id="help-request" class="fa fa-question-circle"></i>
+              </sup>
+            </div>
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    {% block saas_page_layout %}
+    <p class="lead">
+      {% block saas_lead_help %}{% endblock %}
+    </p>
+    <div class="row">
+      <div class="col-md-12">
+        {% block saas_help %}{% endblock %}
+        {% block saas_content %}{% endblock %}
+      </div>
+    </div>
+    {% endblock %}
+
+  </div><!-- /container -->
+</div>
+{% endblock %}
+
+{% block saas_bodyscripts %}
+{{ render_bundle('js_vendor-vue') }}
+<script type="text/javascript">
+Vue.prototype.$itemsPerPage =
+    {% if items_per_page %}{{items_per_page}}{% else %}25{% endif %};
+//Vue.prototype.$sortDirection = ;
+//Vue.prototype.$sortByField = ;
+Vue.prototype.$dateRange = {
+    start_at: "{% if start_at %}{{start_at|isoformat}}{% endif %}",
+    ends_at: "{% if ends_at %}{{ends_at|isoformat}}{% endif %}"
+};
+Vue.prototype.$urls = {% if urls %}{{urls|to_json}}{% else %}{}{% endif %};
+Vue.prototype.$labels = {
+    notAvailableLabel: "{% trans %}N/A{% endtrans %}",
+    cardNumberLabel: "{% trans %}Card Number{% endtrans %}",
+    securityCodeLabel: "{% trans %}Security Code{% endtrans %}",
+    expirationLabel: "{% trans %}Expiration{% endtrans %}",
+    cardHolderLabel: "{% trans %}Card Holder{% endtrans %}",
+    streetAddressLabel: "{% trans %}Street address{% endtrans %}",
+    localityLabel: "{% trans %}City/Town{% endtrans %}",
+    regionLabel: "{% trans %}State/Province/County{% endtrans %}",
+    postalCodeLabel: "{% trans %}Zip/Postal code{% endtrans %}",
+    countryLabel: "{% trans %}Country{% endtrans %}",
+    fieldShoundNotBeEmptyError: "{% trans %}This field shouldn't be empty{% endtrans %}",
+    fieldsCannotBeEmptyError: " {% trans %}field(s) cannot be empty.{% endtrans %}",
+}
+Vue.prototype.$tables = {% if tables %}{{tables|safe}}{% else %}{}{% endif %}; // XXX
+
+</script>
+{{ render_bundle('js_djaodjin-vue') }}
+<script type="text/javascript">
+Vue.use(Croppa);
+Vue.use(uiv, {prefix: 'uiv'});
+
+var app = new Vue({
+  el: '#app',
+  delimiters: ["[[","]]"],
+});
+
+humanizeTimeDelta.$labels = {
+    timeAgoTemplate: "{% trans %}%(timedelta)s ago{% endtrans %}",
+    timeLeftTemplate: "{% trans %}%(timedelta)s left{% endtrans %}",
+};
+</script>
+{% block dashboard_bodyscripts %}{% endblock %}
+{% endblock %}
