@@ -5,6 +5,7 @@
 import os.path, sys
 import os
 
+from django.core.exceptions import ImproperlyConfigured
 from django import VERSION as DJANGO_VERSION
 from django.contrib.messages import constants as messages
 
